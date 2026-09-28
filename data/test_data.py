@@ -38,3 +38,4 @@ print(df.dtypes)
 
 #show number of records
 print("\nNumber of records:", len(df))
+

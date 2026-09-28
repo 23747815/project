@@ -11,3 +11,10 @@ df = pd.read_csv(
 df = df.drop(columns=["Unnamed: 0"])
 
 print(df)
+
+#checking number of records
+print("Number of records:", len(df))
+
+#checking what data we have 
+print("\nColumns")
+print(df.columns.tolist())

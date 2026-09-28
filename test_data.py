@@ -7,4 +7,7 @@ df = pd.read_csv(
     skiprows=7
 )
 
+#remove first empty column 
+df = df.drop(columns=["Unnamed: 0"])
+
 print(df)

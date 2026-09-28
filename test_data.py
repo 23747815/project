@@ -18,3 +18,16 @@ print("Number of records:", len(df))
 #checking what data we have 
 print("\nColumns")
 print(df.columns.tolist())
+
+#filtering out unnecessary columns 
+print(
+    df[
+        [
+            "Date",
+            "Minimum temperature (ï¿½C)",
+            "Maximum temperature (ï¿½C)",
+            "Rainfall (mm)", 
+            "Sunshine (hours)",
+        ]
+    ]
+)

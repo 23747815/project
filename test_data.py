@@ -12,3 +12,11 @@ df = df.drop(columns=["Unnamed: 0"])
 
 #convert Date from text to datetime format
 df["Date"] = pd.to_datetime(df["Date"])
+
+#rename columns 
+df = df.rename(columns={
+    "Minimum temperature (°C)": "MinTemp",
+    "Maximum temperature (°C)": "MaxTemp",
+    "Rainfall (mm)": "Rainfall",
+    "Sunshine (hours)": "Sunshine"  
+})

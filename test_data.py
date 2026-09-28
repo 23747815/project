@@ -31,3 +31,7 @@ print(
         ]
     ]
 )
+
+#checking data types
+print("\nData types")
+print(df.dtypes)

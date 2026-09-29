@@ -15,5 +15,52 @@ AI used | purpose/prompt | what was used | reviewed
 
 ## 29/09/2026 
 
-###
+### Choice of application technology
+- **AI tool:** ChatGPT
+- **Purpose:** Asked whether Streamlit was required for the project.
+- **What AI was used for:** Reviewed the assignment requirements and explained that the brief requires an interactive application with at least three screens/views, but does not specify Streamlit.
+- **What was used:** Decided to develop the application using Python and Tkinter instead of Streamlit.
+- **Verification/actions:** Decision was based on the assignment requirements and the team's preference to avoid an unnecessary framework.
 
+### Combining BOM datasets
+- **AI tool:** ChatGPT
+- **Purpose:** Asked how to combine multiple monthly BOM CSV files into one dataset.
+- **What AI was used for:** Provided Python code using Pandas to load multiple CSV files, clean the relevant columns, convert dates, combine the datasets and save the result.
+- **What was used:** `glob`, `pandas`, `pd.concat()`, date conversion, column standardisation and CSV output.
+- **Verification/actions:** Ran the program in VS Code. Confirmed that 12 monthly BOM files were successfully processed and produced 365 records.
+
+### Debugging file paths
+- **AI tool:** ChatGPT
+- **Purpose:** Asked for help after the dataset-combining program returned `ValueError: No objects to concatenate`.
+- **What AI was used for:** Helped identify that the Python script and `raw_data` folder were in different locations from the paths originally used.
+- **What was used:** Revised the file-path handling and used `Path(__file__)` so the program could locate the `raw_data` folder relative to the Python script.
+- **Verification/actions:** Ran the revised program successfully and confirmed that all 12 files were found.
+
+### Data cleaning and quality checking
+- **AI tool:** ChatGPT
+- **Purpose:** Asked how to handle differences between the monthly BOM files.
+- **What AI was used for:** Suggested selecting only the weather variables needed by the application and standardising their names rather than keeping unnecessary columns.
+- **What was used:** The combined dataset was reduced to Date, MinTemp, MaxTemp, Rainfall, Sunshine and SourceFile.
+- **Verification/actions:** Ran data-quality checks and confirmed:
+  - 12 files
+  - 365 records
+  - no duplicate dates
+  - date range from 2025-08-01 to 2026-07-31
+  - 1 missing MaxTemp value
+- **Result:** The cleaned dataset was saved as `bom_weather.csv`.
+
+### AI documentation
+- **AI tool:** ChatGPT
+- **Purpose:** Asked how to maintain the required `AI-LOG.md`.
+- **What AI was used for:** Explained what significant AI use should be recorded and how to document prompts, uses, verification and changes.
+- **What was used:** Created the structure and entries in this AI log.
+- **Verification/actions:** Ensured the log reflects actual AI-assisted work undertaken during the project.
+
+### Weather data loader
+*Codex | requested a reusable load_weather_data(filepath) function | added src/data_loader.py to read combined CSV data, convert dates and measurements, reject missing required columns, remove incomplete or invalid observations, and sort by date | verified against data/bom_weather.csv: 364 clean rows returned
+
+### Weather data loader tests
+*Codex | requested tests with a variety of data | added tests/test_data_loader.py using unittest and temporary CSV files; covers valid values and sorting, missing and invalid required values, optional metadata, missing columns, header-only and invalid-only data, nonexistent files, and empty files | python -m unittest discover -s tests -v: all 8 tests passed; pandas emitted date-format inference warnings for malformed-date cases
+
+### Ongoing AI change summaries
+Record summaries of subsequent AI-assisted project changes in this file, as requested by the user.

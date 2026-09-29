@@ -64,3 +64,10 @@ AI used | purpose/prompt | what was used | reviewed
 
 ### Ongoing AI change summaries
 Record summaries of subsequent AI-assisted project changes in this file, as requested by the user.
+
+### Noongar season lookup
+- **AI tool:** Codex
+- **Purpose:** Fill out the existing get_noongar_season(date) stub.
+- **What was used:** Added a month-to-season lookup in src/seasons.py, accepting Python dates, datetimes and pandas Timestamps. Documented that month boundaries are approximate guides to traditional seasons.
+- **Source:** [Bureau of Meteorology seasonal calendar](https://media.bom.gov.au/social/blog/53/nyoongar-seasonal-calendar/).
+- **Verification/actions:** Checked all 12 month mappings, a datetime at year end, and a pandas Timestamp on leap day; all checks passed.

@@ -1,0 +1,39 @@
+"Daily Weather Observations for Perth, Western Australia for November 2025"
+"Prepared at 13:03 UTC on Thursday 10 September 2026   IDCJDW6111.202511"
+"Copyright 2003 Commonwealth Bureau of Meteorology"
+"A combination of observations from Perth Metro and Perth Airport."
+"Significant variations can be experienced across the Perth metropolitan area on individual days. On average the inner city area is warmer overnight than the current observation sites. The current official Perth observation site is Perth Metro, however in the past Perth Regional Office {station 009034} and Perth Gardens {station 009097} have been official Perth observation sites.Some cloud observations are from automated equipment; these are somewhat different to those made by a human observer and may not appear every day."
+"Temperature, humidity, wind, pressure and rainfall observations are from Perth Metro {station 009225}"
+"Cloud, evaporation and sunshine observations are from Perth Airport M.O. {station 009021}"
+
+,"Date","Minimum temperature (°C)","Maximum temperature (°C)","Rainfall (mm)","Evaporation (mm)","Sunshine (hours)","Direction of maximum wind gust ","Speed of maximum wind gust (km/h)","Time of maximum wind gust","9am Temperature (°C)","9am relative humidity (%)","9am cloud amount (oktas)","9am wind direction","9am wind speed (km/h)","9am MSL pressure (hPa)","3pm Temperature (°C)","3pm relative humidity (%)","3pm cloud amount (oktas)","3pm wind direction","3pm wind speed (km/h)","3pm MSL pressure (hPa)"
+,2025-11-1,15.7,20.6,4.4,3.4,11.4,SW,41,15:42,18.1,64,7,S,15,1017.8,19.5,44,3,SSW,22,1018.7
+,2025-11-2,7.6,24.3,0,6.2,12.4,SW,35,17:11,17.7,44,0,ENE,9,1025.0,22.0,43,0,SW,17,1020.9
+,2025-11-3,12.9,30.1,0,8.0,12.4,NE,33,09:11,20.2,39,1,ENE,15,1018.9,29.0,17,2,NE,15,1012.2
+,2025-11-4,19.1,26.4,0,11.6,8.7,ENE,44,01:55,22.8,31,7,ENE,13,1007.9,24.9,39,6,NNE,7,1006.6
+,2025-11-5,14.7,24.9,7.2,5.4,10.8,NNW,41,11:31,22.0,58,3,NNE,9,1004.9,23.4,53,5,WSW,13,1002.7
+,2025-11-6,16.7,22.8,0,6.4,8.1,S,39,12:41,19.1,72,8,SSW,13,1012.3,21.4,52,2,SSW,20,1013.2
+,2025-11-7,12.8,25.5,0,3.8,12.3,SW,31,16:51,19.1,52,1,E,9,1019.6,25.0,32,2,SSW,13,1017.2
+,2025-11-8,13.5,27.7,0,8.0,12.8,SSW,35,17:35,20.5,43,0,ESE,13,1022.0,27.1,26,1,ENE,9,1018.2
+,2025-11-9,14.5,29.8,0,9.0,12.6,SW,39,16:56,22.9,35,1,ENE,13,1019.3,29.1,23,6,SE,13,1015.2
+,2025-11-10,14.9,30.8,0,9.2,12.8,E,35,07:07,21.4,46,0,E,13,1018.7,30.2,20,0,ESE,13,1014.4
+,2025-11-11,16.5,33.9,0,10.6,12.7,ENE,37,07:28,24.9,32,1,NE,20,1015.8,32.4,13,1,NE,7,1012.0
+,2025-11-12,14.7,30.6,0,9.6,12.6,SSW,41,15:21,27.6,25,1,E,4,1010.8,26.6,48,1,SSW,19,1009.0
+,2025-11-13,14.6,24.1,0,8.4,12.5,SSW,39,15:39,19.7,46,1,ENE,9,1014.7,21.9,49,2,SW,19,1011.8
+,2025-11-14,13.3,24.1,0,6.8,12.9,SSW,44,15:16,18.7,50,1,SSE,9,1013.9,21.5,47,1,SSW,22,1011.1
+,2025-11-15,10.8,23.4,0,7.8,12.8,S,39,14:14,18.7,49,1,SE,11,1018.5,21.4,49,1,SW,20,1016.5
+,2025-11-16,13.7,27.7,0,6.6,12.8,SSW,31,13:27,20.4,44,0,E,11,1021.4,25.0,45,0,SSW,15,1018.0
+,2025-11-17,14.7,34.5,0,8.0,12.4,SSE,33,18:57,24.2,44,0,ENE,13,1017.4,32.8,26,1,SSW,17,1011.7
+,2025-11-18,18.9,30.4,0,10.8,4.2,NE,30,22:23,21.3,55,7,ENE,9,1013.2,28.5,44,7,SSE,9,1008.2
+,2025-11-19,18.0,30.1,0,5.6,10.5,E,30,03:08,25.2,51,6,ENE,11,1008.8,28.5,37,6,SSE,17,1006.1
+,2025-11-20,17.8,31.0,0.4,6.2,10.4,SSW,33,15:19,23.1,60,6,E,9,1009.9,28.2,45,5,SSW,15,1007.1
+,2025-11-21,17.1,30.3,0,7.8,10.1,S,30,15:51,22.6,59,2,E,11,1011.5,28.9,43,5,SSW,15,1008.4
+,2025-11-22,18.7,25.0,0,7.2,7.0,SW,33,21:19,21.9,76,7,WNW,11,1008.0,23.5,59,6,W,15,1006.7
+,2025-11-23,15.9,21.8,0.6,4.8,9.0,SW,52,12:04,19.4,42,2,WSW,20,1010.3,19.6,55,4,WSW,19,1010.7
+,2025-11-24,15.2,21.8,3.0,6.2,7.8,SSW,39,14:56,18.4,53,3,SW,19,1014.2,20.9,35,2,SW,19,1013.3
+,2025-11-25,15.7,22.7,0,7.0,11.9,SW,33,16:53,19.3,51,3,SW,17,1014.4,21.4,46,2,W,13,1013.1
+,2025-11-26,13.9,24.3,1.2,6.2,11.9,S,31,15:54,20.7,59,3,W,9,1013.4,22.0,57,3,SW,17,1011.9
+,2025-11-27,11.7,22.6,0,8.4,11.4,SW,43,15:12,19.0,48,7,SE,11,1014.2,21.7,44,1,SSW,22,1012.6
+,2025-11-28,11.5,23.3,0,7.6,13.1,SSW,39,16:15,18.9,42,2,SE,9,1016.8,21.5,46,0,SSW,20,1014.8
+,2025-11-29,13.7,26.5,0,7.0,13.1,SSW,37,15:05,21.1,50,0,ESE,13,1019.9,24.0,47,0,SSW,20,1018.0
+,2025-11-30,16.3,35.0,0,10.0,13.2,ENE,31,03:50,23.4,36,0,ENE,17,1021.8,33.7,18,0,ESE,9,1017.2

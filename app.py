@@ -1,6 +1,7 @@
 """A basic tkinter interface for the Noongar Seasons Explorer."""
 
 import tkinter as tk
+import webbrowser
 from tkinter import messagebox, ttk
 from pathlib import Path
 
@@ -295,6 +296,19 @@ def main():
         next_button.pack(fill="x", pady=4)
         display_question()
 
+    def open_report():
+        """Open the existing HTML analysis report in the default web browser."""
+        report_path = Path(__file__).resolve().parent / "outputs" / "seasons" / "report.html"
+        if not report_path.is_file():
+            messagebox.showerror(
+                "Analysis report not found",
+                f"The analysis report could not be found:\n{report_path}",
+                parent=window,
+            )
+            return
+        # Convert the local path to a file URL, including any spaces in the path.
+        webbrowser.open(report_path.as_uri())
+
     # Pack the controls first so the results cannot take their vertical space.
     controls_frame = ttk.Frame(content)
     controls_frame.pack(fill="x")
@@ -302,6 +316,9 @@ def main():
         fill="x", pady=4
     )
     ttk.Button(controls_frame, text="Quiz", command=show_quiz).pack(fill="x", pady=4)
+    ttk.Button(
+        controls_frame, text="View Full Analysis Report", command=open_report,
+    ).pack(fill="x", pady=4)
     ttk.Button(controls_frame, text="Exit", command=window.destroy).pack(fill="x", pady=4)
 
     # The summary and graph share only the space remaining below the controls.

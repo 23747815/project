@@ -146,3 +146,11 @@ Record summaries of subsequent AI-assisted project changes in this file, as requ
 - **Content limits:** Used only the supplied month ranges and weather descriptions. No additional Noongar cultural information, traditions, stories or ecological claims were introduced.
 - **Verification/actions:** Python syntax and whitespace checks passed. In-memory checks confirmed description updates and successful weather-summary and graph execution for all six seasons. Code comparisons confirmed that the weather calculations, graph functions, quiz and main button layout were unchanged. Real Tkinter rendering and button visibility were not retested because of the existing Tcl runtime issue.
 - **Scope:** Only app.py was modified for this implementation. CSV files, the HTML report and src/seasons.py were untouched. No new libraries or files were added.
+
+### Opening the full analysis report from the GUI
+- **AI tool:** Codex
+- **Purpose:** Add a "View Full Analysis Report" button that opens the existing HTML report in the user's default browser.
+- **What was used:** Added the button to the existing controls frame and a dedicated open_report() function in app.py. The function uses pathlib to resolve outputs/seasons/report.html relative to app.py, checks is_file(), converts the path to a file URL with as_uri(), and calls Python's built-in webbrowser.open().
+- **Error handling:** If the report is missing, a Tkinter error message explains that the analysis report could not be found and shows the expected path.
+- **Verification/actions:** Python syntax and whitespace checks passed. Confirmed that the report exists. Tests with mocked browser and message-box calls verified the expected report URL and missing-file error, without launching a browser. A syntax-tree comparison confirmed that the existing application code was unchanged apart from the new import, function and button. Actual button visibility and browser launching remain unverified in this environment.
+- **Scope:** Only app.py was modified for the implementation. Weather calculations, the temperature graph, quiz, season descriptions and existing controls were preserved. The HTML report, CSV files and src/seasons.py were not modified. No external dependencies were added.

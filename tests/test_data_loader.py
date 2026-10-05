@@ -84,6 +84,34 @@ class LoadWeatherDataTests(unittest.TestCase):
         with self.assertRaises(pd.errors.EmptyDataError):
             load_weather_data(self.filepath)
 
+    def test_keep_missing_measurements_still_removes_invalid_dates(self):
+        self.filepath.write_text(
+            "Date,MinTemp,MaxTemp,Rainfall,Sunshine\n"
+            "2026-04-02,11,21,0,invalid\n"
+            "2026-04-01,,20,,8\n"
+            "invalid-date,10,20,0,8\n",
+            encoding="utf-8",
+        )
+        result = load_weather_data(self.filepath, drop_missing=False)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result.index.tolist(), [0, 1])
+        self.assertTrue(pd.isna(result.loc[0, "MinTemp"]))
+        self.assertTrue(pd.isna(result.loc[0, "Rainfall"]))
+        self.assertEqual(result.loc[1, "Rainfall"], 0)
+        self.assertTrue(pd.isna(result.loc[1, "Sunshine"]))
+        self.assertEqual(result.loc[0, "Date"], pd.Timestamp("2026-04-01"))
+
+    def test_optional_measurements_are_numeric_without_dropping_rows(self):
+        result = self.load_rows(
+            ["2026-04-01,10,20,0,8,invalid,65,SW", "2026-04-02,11,21,1,7,20,,"],
+            header="Date,MinTemp,MaxTemp,Rainfall,Sunshine,WindSpeed3pm,Humidity3pm,WindDirection3pm",
+        )
+        self.assertEqual(len(result), 2)
+        self.assertTrue(pd.isna(result.loc[0, "WindSpeed3pm"]))
+        self.assertEqual(result.loc[1, "WindSpeed3pm"], 20)
+        self.assertTrue(pd.isna(result.loc[1, "Humidity3pm"]))
+        self.assertEqual(result.loc[0, "WindDirection3pm"], "SW")
+
 
 if __name__ == "__main__":
     unittest.main()

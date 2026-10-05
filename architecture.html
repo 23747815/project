@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Architecture of the CITS1501 Noongar Seasons Explorer: local BOM data, Python analysis, a Tkinter interface and automated tests.">
+  <title>Noongar Seasons Explorer — System Architecture</title>
+  <style>
+    :root { color-scheme: light; --ink:#182f3a; --muted:#526774; --line:#d9e2e5; --source:#32778b; --process:#71549b; --dataset:#277568; --app:#235a94; --feature:#946224; --test:#536743; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#f3f5f3; color:var(--ink); font:16px/1.6 "Segoe UI",Arial,sans-serif; }
+    main { max-width:1180px; margin:auto; padding:54px 32px 24px; }
+    .eyebrow { color:var(--dataset); font-size:12px; letter-spacing:.16em; font-weight:750; text-transform:uppercase; }
+    h1 { max-width:900px; margin:12px 0 18px; font-size:clamp(30px,4.5vw,49px); line-height:1.13; letter-spacing:-.035em; }
+    h2,h3,p { margin:0; }
+    .intro { max-width:760px; color:var(--muted); font-size:18px; }
+    .meta { display:flex; flex-wrap:wrap; gap:10px; margin:24px 0 34px; }
+    .meta span { border:1px solid var(--line); border-radius:30px; padding:5px 13px; background:white; font-size:12px; font-weight:650; }
+    .board { background:white; border:1px solid var(--line); border-radius:20px; padding:30px; box-shadow:0 14px 44px #173a4610; }
+    .board-heading { display:flex; justify-content:space-between; align-items:center; gap:16px; border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:26px; }
+    .board-heading h2 { font-size:19px; }
+    .board-heading p { font-size:12px; color:var(--muted); }
+    .diagram { display:grid; grid-template-columns:minmax(0,1fr) 64px 260px; align-items:center; }
+    .node { grid-column:1; border:1px solid var(--line); border-left:5px solid var(--accent); border-radius:10px; padding:17px 20px; background:var(--tint); min-width:0; }
+    .source { --accent:var(--source); --tint:#f0f8fa; }
+    .process { --accent:var(--process); --tint:#f7f4fb; }
+    .dataset { --accent:var(--dataset); --tint:#f0f8f5; }
+    .application { --accent:var(--app); --tint:#edf4fc; }
+    .feature { --accent:var(--feature); --tint:#fcf8ef; }
+    .testing { --accent:var(--test); --tint:#f3f6ee; }
+    .kind { color:var(--accent); text-transform:uppercase; font-size:10px; letter-spacing:.13em; font-weight:800; display:block; margin-bottom:5px; }
+    .node h3 { font-size:19px; line-height:1.35; }
+    .node p { color:var(--muted); font-size:13px; margin-top:7px; }
+    code { font:12px/1.55 Consolas,"Courier New",monospace; overflow-wrap:anywhere; }
+    .path { display:block; margin-top:5px; color:var(--ink); }
+    .step { float:right; font-size:12px; color:var(--accent); opacity:.8; margin-left:12px; }
+    .arrow { grid-column:1; display:flex; justify-content:center; align-items:center; gap:9px; height:46px; color:var(--muted); font-size:11px; }
+    .arrow svg { width:18px; height:38px; flex:none; }
+    .note { border-top:1px solid #71549b25; margin-top:11px; padding-top:9px; font-size:12px; color:var(--muted); }
+    .support-link { grid-column:2; grid-row:7; align-self:center; border-top:2px dashed #879778; position:relative; }
+    .support-link::before { content:""; position:absolute; left:0; top:-5px; border-top:4px solid transparent; border-bottom:4px solid transparent; border-right:7px solid #879778; }
+    .support-link span { position:absolute; top:-25px; width:100%; text-align:center; font-size:10px; color:var(--test); }
+    .support { grid-column:3; grid-row:7 / 10; align-self:start; padding:18px; }
+    .support strong { display:block; font-size:29px; letter-spacing:-.04em; margin:8px 0; }
+    .support ul { padding-left:17px; margin:10px 0 0; color:var(--muted); font-size:12px; }
+    .application h3 { font-size:24px; }
+    .features { grid-column:1 / -1; padding-top:28px; position:relative; }
+    .features::before { content:""; position:absolute; top:0; left:calc((100% - 324px) / 2); height:28px; border-left:2px solid #91a6b1; }
+    .feature-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; border-top:2px solid #91a6b1; }
+    .feature-wrap { padding-top:27px; position:relative; }
+    .feature-wrap::before { content:""; position:absolute; top:0; left:50%; height:21px; border-left:2px solid #91a6b1; }
+    .feature-wrap::after { content:""; position:absolute; top:18px; left:calc(50% - 4px); border-left:5px solid transparent; border-right:5px solid transparent; border-top:7px solid #91a6b1; }
+    .feature { height:100%; padding:18px; }
+    .feature h3 { font-size:18px; }
+    .feature ul { margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:13px; }
+    .legend { display:flex; flex-wrap:wrap; gap:12px 22px; border-top:1px solid var(--line); margin-top:28px; padding-top:20px; font-size:12px; color:var(--muted); }
+    .legend h3 { font-size:12px; color:var(--ink); }
+    .key { display:inline-flex; align-items:center; gap:7px; }
+    .dot { height:9px; width:9px; border-radius:3px; background:var(--accent); }
+    .line-key { width:20px; border-top:2px solid #91a6b1; }
+    .line-key.dashed { border-top:2px dashed #879778; }
+    .details { display:grid; grid-template-columns:1.4fr 1fr; gap:36px; margin:34px 0; }
+    .details h2 { font-size:20px; margin-bottom:12px; }
+    .details p,.details li { font-size:14px; color:var(--muted); }
+    .details ol { margin:0; padding-left:20px; }
+    .details li { padding-left:5px; margin-bottom:8px; }
+    .test-result { color:var(--dataset); font-weight:750; }
+    .command { display:inline-block; background:#e7ede8; padding:5px 12px; margin-top:12px; border-radius:5px; }
+    footer { border-top:1px solid var(--line); padding:20px 0; font-size:12px; color:var(--muted); }
+    @media (max-width:850px) {
+      .diagram { grid-template-columns:minmax(0,1fr); }
+      .support-link { display:none; }
+      .support { grid-column:1; grid-row:13; margin-top:22px; border:2px dashed #879778; }
+      .features { grid-row:12; }
+      .features::before { left:50%; }
+      .board-heading { align-items:flex-start; flex-direction:column; gap:4px; }
+    }
+    @media (max-width:580px) {
+      main { padding:28px 14px 16px; }
+      .board { padding:18px 14px; }
+      .feature-grid { grid-template-columns:1fr; gap:0; border-top:0; }
+      .feature-wrap { padding-top:28px; }
+      .features { padding-top:0; }
+      .features::before { display:none; }
+      .details { grid-template-columns:1fr; gap:24px; }
+      .node { padding:15px; }
+      .support { margin-top:24px; }
+    }
+    @media print {
+      body { background:white; }
+      main { max-width:none; padding:0; }
+      .board { box-shadow:none; }
+      .node,.details section { break-inside:avoid; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">CITS1501 · Project architecture</p>
+    <h1>Noongar Seasons Explorer — System Architecture</h1>
+    <p class="intro">How BOM weather data flows through the processing and analysis pipeline into the Tkinter application.</p>
+    <div class="meta"><span>Local CSV pipeline</span><span>365 daily records</span><span>Six Noongar seasons</span><span>Python · Tkinter · pandas · matplotlib</span></div>
+  </header>
+
+  <section class="board" aria-labelledby="diagram-title">
+    <div class="board-heading"><h2 id="diagram-title">From observations to exploration</h2><p>Read from top to bottom · Arrows show the direction of flow</p></div>
+    <div class="diagram">
+      <article class="node source">
+        <span class="step">01</span><span class="kind">Data source</span><h3>BOM weather CSV files</h3>
+        <code class="path">data/raw_data/</code><p>Original monthly weather observations supplied to the project.</p>
+      </article>
+      <div class="arrow"><svg viewBox="0 0 18 38" aria-hidden="true"><path d="M9 2V32m-5-6 5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Read monthly observations</span></div>
+      <article class="node process">
+        <span class="step">02</span><span class="kind">Processing scripts</span><h3>Clean &amp; combine</h3>
+        <code class="path">data/combine_data.py</code><p>The original combiner cleans core weather columns, combines monthly files and sorts dates.</p>
+        <div class="note"><strong>Current analysis pipeline:</strong> <code>data/combine_data_extended.py</code> is the enhanced combiner called by the analysis. It retains additional wind, humidity, cloud and other measurements.</div>
+      </article>
+      <div class="arrow"><svg viewBox="0 0 18 38" aria-hidden="true"><path d="M9 2V32m-5-6 5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Write cleaned data</span></div>
+      <article class="node dataset">
+        <span class="step">03</span><span class="kind">Dataset</span><h3>bom_weather.csv</h3>
+        <code class="path">data/bom_weather.csv</code><p>365 daily records. The current extended export contains 21 columns and retains missing measurements.</p>
+      </article>
+      <div class="arrow"><svg viewBox="0 0 18 38" aria-hidden="true"><path d="M9 2V32m-5-6 5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Load through src/data_loader.py</span></div>
+      <article class="node process">
+        <span class="step">04</span><span class="kind">Analysis script</span><h3>seasons_analysis.py</h3>
+        <code class="path">src/seasons_analysis.py</code><p>Runs the extended combiner first, loads the cleaned dataset, calculates weather statistics, and exports tables, charts and the HTML report.</p>
+        <div class="note"><strong>Shared season logic:</strong> <code>src/seasons.py</code> supplies <code>add_seasons_column()</code> and <code>get_noongar_season()</code>. Month groups are calendar approximations.</div>
+      </article>
+      <div class="support-link" aria-hidden="true"><span>verifies</span></div>
+      <aside class="node testing support" aria-label="Automated testing supports the Python processing and analysis components">
+        <span class="kind">Supporting component · Testing</span><h3>Automated checks</h3><strong>69 tests passed</strong>
+        <code class="path">pytest</code><code class="path">tests/test_explorer.py</code>
+        <p>33 cases in the new file, plus 36 existing tests across the full suite.</p>
+        <ul><li>Season mapping and boundaries</li><li>Statistical results and missing data</li><li>Data loading and preparation</li><li>Saved dataset and report exports</li></ul>
+        <p>The dashed connection represents verification of Python data and analysis components, not a runtime data flow or a full GUI test.</p>
+      </aside>
+      <div class="arrow"><svg viewBox="0 0 18 38" aria-hidden="true"><path d="M9 2V32m-5-6 5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Export season-labelled records</span></div>
+      <article class="node dataset">
+        <span class="step">05</span><span class="kind">Dataset</span><h3>daily_weather_with_seasons.csv</h3>
+        <code class="path">outputs/seasons/daily_weather_with_seasons.csv</code><p>365 records and 22 columns, including the existing <code>Season</code> label for every date.</p>
+      </article>
+      <div class="arrow"><svg viewBox="0 0 18 38" aria-hidden="true"><path d="M9 2V32m-5-6 5 6 5-6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Read with pandas when Explore Season is clicked</span></div>
+      <article class="node application">
+        <span class="step">06</span><span class="kind">Application</span><h3>Noongar Seasons Explorer</h3>
+        <code class="path">app.py · Tkinter / ttk</code><p>Filters the saved <code>Season</code> column and provides the main controls. It does not regenerate the dataset or assign seasons again.</p>
+      </article>
+      <div class="features" aria-label="User-facing features available from app.py">
+        <div class="feature-grid">
+          <div class="feature-wrap"><article class="node feature"><span class="kind">User-facing feature</span><h3>Season Explorer</h3><ul><li>Select one of six seasons</li><li>Read the supplied season description</li><li>View recorded days, temperature averages, rainfall total and average sunshine</li><li>View an embedded daily temperature graph</li></ul></article></div>
+          <div class="feature-wrap"><article class="node feature"><span class="kind">User-facing feature</span><h3>Quiz</h3><ul><li>Separate Tkinter quiz window</li><li>Five multiple-choice questions</li><li>Answer feedback and progression</li><li>Final score out of five</li></ul></article></div>
+          <div class="feature-wrap"><article class="node feature"><span class="kind">User-facing feature · Opens saved output</span><h3>HTML Analysis Report</h3><code class="path">outputs/seasons/report.html</code><p>Generated by <code>seasons_analysis.py</code>, alongside the CSV export.</p><ul><li>Detailed weather analysis and charts</li><li>Opened in the default browser via <code>webbrowser</code></li></ul></article></div>
+        </div>
+      </div>
+    </div>
+    <div class="legend" aria-label="Diagram legend">
+      <h3>Legend</h3><span class="key source"><i class="dot" aria-hidden="true"></i>Data source</span><span class="key process"><i class="dot" aria-hidden="true"></i>Processing / analysis</span><span class="key dataset"><i class="dot" aria-hidden="true"></i>Dataset</span><span class="key application"><i class="dot" aria-hidden="true"></i>Application</span><span class="key feature"><i class="dot" aria-hidden="true"></i>User-facing feature</span><span class="key testing"><i class="dot" aria-hidden="true"></i>Testing</span><span class="key"><i class="line-key" aria-hidden="true"></i>Data flow / feature access</span><span class="key"><i class="line-key dashed" aria-hidden="true"></i>Test coverage</span>
+    </div>
+  </section>
+
+  <div class="details">
+    <section aria-labelledby="flow-title"><h2 id="flow-title">Data Flow</h2><ol>
+      <li><strong>Prepare:</strong> raw monthly BOM files are cleaned into <code>data/bom_weather.csv</code>. The original combiner remains available; the analysis uses its extended counterpart.</li>
+      <li><strong>Analyse:</strong> the analysis calls the existing season-assignment functions, calculates statistics and generates the daily CSV, chart files and HTML report.</li>
+      <li><strong>Explore:</strong> the GUI reads the saved daily CSV, filters by season and displays descriptions, summary values and a temperature graph. Quiz answers are stored in <code>app.py</code>; the report button opens the existing HTML file.</li>
+    </ol></section>
+    <section aria-labelledby="testing-title"><h2 id="testing-title">Testing</h2><p><span class="test-result">Latest recorded pytest result: 69 passed, 0 failed.</span> The run reported three existing date-parsing warnings from invalid-input loader tests.</p><p style="margin-top:10px">Tests exercise existing classification and analysis functions, boundary dates, invalid inputs and data integrity. Report-generation tests use temporary output folders; the saved project datasets and report remain unchanged.</p><p style="margin-top:10px"><code>pytest.ini</code> limits discovery to <code>tests/</code>. Run from the project root:</p><code class="command">pytest</code></section>
+  </div>
+  <footer>This architecture diagram represents the current CITS1501 project implementation. · Standalone HTML and CSS · No external resources</footer>
+</main>
+</body>
+</html>

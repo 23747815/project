@@ -162,12 +162,21 @@ def main():
     def show_quiz():
         messagebox.showinfo("Quiz", "Quiz coming soon!", parent=window)
 
-    ttk.Button(content, text="Explore Season", command=explore_season).pack(
+    # Pack the controls first so the results cannot take their vertical space.
+    controls_frame = ttk.Frame(content)
+    controls_frame.pack(fill="x")
+    ttk.Button(controls_frame, text="Explore Season", command=explore_season).pack(
         fill="x", pady=4
     )
+    ttk.Button(controls_frame, text="Quiz", command=show_quiz).pack(fill="x", pady=4)
+    ttk.Button(controls_frame, text="Exit", command=window.destroy).pack(fill="x", pady=4)
+
+    # The summary and graph share only the space remaining below the controls.
+    results_area = ttk.Frame(content)
+    results_area.pack(fill="both", expand=True)
 
     # Display the selected season's summary inside the main window.
-    results_frame = ttk.LabelFrame(content, text="Weather summary", padding=12)
+    results_frame = ttk.LabelFrame(results_area, text="Weather summary", padding=12)
     results_frame.pack(fill="x", pady=12)
     ttk.Label(
         results_frame,
@@ -178,16 +187,13 @@ def main():
 
     # Create one figure and embed its canvas as a normal Tkinter widget.
     # Each Explore click reuses this figure, so graphs do not accumulate.
-    graph_frame = ttk.Frame(content)
+    graph_frame = ttk.Frame(results_area)
     graph_frame.pack(fill="both", expand=True, pady=(0, 8))
     temperature_figure = Figure(figsize=(5, 2.5), dpi=100, layout="constrained")
     temperature_axes = temperature_figure.add_subplot(111)
     graph_canvas = FigureCanvasTkAgg(temperature_figure, master=graph_frame)
     graph_canvas.get_tk_widget().pack(fill="both", expand=True)
     clear_graph("Select a season to view daily temperatures.")
-
-    ttk.Button(content, text="Quiz", command=show_quiz).pack(fill="x", pady=4)
-    ttk.Button(content, text="Exit", command=window.destroy).pack(fill="x", pady=4)
 
     season_dropdown.focus_set()
     # The event loop keeps the window open and responds to user input.

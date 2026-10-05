@@ -104,3 +104,27 @@ Record summaries of subsequent AI-assisted project changes in this file, as requ
 - **Export columns:** Date, MinTemp, MaxTemp, Rainfall, Sunshine, SourceFile, Evaporation, MaxGustSpeed, MaxGustDirection, Temp9am, Humidity9am, Cloud9am, WindDirection9am, WindSpeed9am, Pressure9am, Temp3pm, Humidity3pm, Cloud3pm, WindDirection3pm, WindSpeed3pm, Pressure3pm, Season.
 - **Verification/actions:** Inspected source code, the HTML download link and the saved CSV. Confirmed 22 columns and 365 daily records, with all six season labels present. Did not rerun analysis or modify application code, data or report files; only this log was updated.
 - **Proposed reuse:** The GUI can read the existing export's Season column. If new dates require classification, import the existing functions from src.seasons rather than duplicate the month mapping. GUI integration has not been implemented.
+
+### Connecting existing weather data to the GUI
+- **AI tool:** Codex
+- **Purpose:** Make Explore Season display a weather summary using the existing season-labelled CSV.
+- **What was used:** Updated app.py to load outputs/seasons/daily_weather_with_seasons.csv with pandas.read_csv() when Explore Season is clicked. The path is resolved relative to app.py. Rows are filtered using the saved Season column, without assigning seasons again.
+- **Summary calculations:** Counts matching records, calculates mean minimum temperature, mean maximum temperature and mean sunshine, and sums rainfall. Numeric conversion occurs in memory only. Missing values are excluded; sum(min_count=1) prevents entirely missing rainfall from displaying as zero. Unavailable measurements display "Not available".
+- **Error handling:** Added messages for missing or unreadable CSV files, missing required columns and seasons with no records. Previous results are cleared before loading.
+- **Verification/actions:** Syntax and tkinter/pandas import checks passed using the installed Python executable directly. Automated GUI execution was blocked by a missing Tcl runtime. The user subsequently confirmed that the application loaded the CSV and displayed the summaries correctly.
+- **Scope:** Only app.py was modified for this implementation. No CSV files, HTML report or src/seasons.py changes were made, and the existing analysis was not rerun. Quiz remained a placeholder and Exit retained its behaviour.
+
+### Embedded daily temperature graph
+- **AI tool:** Codex
+- **Purpose:** Add one temperature visualisation to the Explore Season results.
+- **What was used:** Added a matplotlib Figure embedded in Tkinter with FigureCanvasTkAgg. The graph plots daily minimum and maximum temperatures against Date, with temperature in degrees Celsius, a legend and date labels.
+- **Data and updates:** Uses the same filtered season records as the summary. Dates are converted and sorted in an in-memory copy. Each Explore Season click clears and redraws the existing graph; no separate plot window is opened. Missing temperatures remain gaps, and empty or unplottable data produces a helpful message.
+- **Verification/actions:** Syntax and import checks passed. Non-GUI rendering checks passed for all six seasons, plotted values, graph replacement, empty data, missing temperatures and invalid dates. Full Tkinter visual testing was unavailable because of the local Tcl runtime issue. The user subsequently reported that the summary and graph appeared correctly, but Quiz and Exit disappeared after exploring a season.
+- **Scope:** Modified only app.py; preserved the existing season labels, calculations, CSV files, HTML report and src/seasons.py.
+
+### Fixing control-button visibility
+- **AI tool:** Codex
+- **Purpose:** Keep Explore Season, Quiz and Exit accessible when the weather results expand.
+- **Cause and change:** Quiz and Exit were packed after the summary and graph in the same frame, allowing growing results to consume the available vertical space. Moved all three buttons into a controls frame packed before a separate expandable results area containing the summary and graph.
+- **Verification/actions:** Syntax and whitespace checks passed. Compared callback function syntax trees with the previous version and confirmed that calculation, graph and button callback functions were unchanged. Visual confirmation of the layout fix remains pending because the local Tcl runtime prevented GUI execution.
+- **Scope:** Only app.py was changed for the fix. No weather calculations, graph logic, data files, HTML report or src/seasons.py were modified.

@@ -83,3 +83,15 @@ Record summaries of subsequent AI-assisted project changes in this file, as requ
 - **Documentation:** Added README.md with run/test instructions, requirements.txt, and ignore rules for future Python cache files and virtual environments. Report text explains the approximate month mapping, one-year sample, mixed stations, observation windows, illustrative thresholds and limits of wind/humidity proxies.
 - **Findings:** The sample has 365 dates from August 2025 through July 2026. Birak's mean maximum is 31.17°C versus Bunuru's 30.96°C; Djilba has 302.4 mm of rain versus Makuru's 178.4 mm. These departures from the broad descriptions are retained. Djeran shows cooler, more humid mornings; Kambarang is warmer than Djilba and has a longer observed dry run.
 - **Verification/actions:** All 36 tests passed, including full report generation with sparse data and entirely missing optional winds, local report-link checks, missing-value denominators, year/season boundaries and raw CSV handling. Ran the full analysis against the supplied data and visually inspected the exported figures. Confirmed the original six CSV columns are unchanged and all 365 unique dates are retained; the expanded CSV has 21 columns. Missing measurements remain: one maximum temperature, three evaporation values and two gust records. Existing malformed-date loader tests still emit pandas date-format inference warnings; they pass.
+
+## 05/10/2026
+
+### Basic tkinter application
+- **AI tool:** Codex
+- **Purpose:** Create a beginner-friendly main GUI for Noongar Seasons Explorer without repeating the weather analysis.
+- **What was used:** Added app.py with a heading, introduction, six-season dropdown, selected-season message, temporary quiz message and Exit button. Uses only Python's tkinter/ttk and messagebox.
+- **GUI details:** The window title and heading are "Noongar Seasons Explorer". The "Select a season:" dropdown contains Birak, Bunuru, Djeran, Makuru, Djilba and Kambarang, defaults to Birak and only allows selection from the list.
+- **Button behaviour:** "Explore Season" displays the selected season in a message box; "Quiz" displays "Quiz coming soon!"; "Exit" closes the application.
+- **Code explanation:** Explained the design before editing and added beginner-friendly comments covering the main function, StringVar selection, button callbacks and tkinter event loop. Provided the VS Code terminal command `python app.py`.
+- **Scope:** No Streamlit or additional libraries were added. Weather analysis, quiz questions and cultural information were not implemented in the GUI.
+- **Verification/actions:** Reviewed the code and callbacks. Runtime verification was unavailable because this environment could not execute the installed python or py command aliases. Existing CSV files, analysis code and HTML report were not changed.

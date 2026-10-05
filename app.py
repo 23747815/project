@@ -54,6 +54,17 @@ def main():
     )
     results_text = tk.StringVar(value="Select a season and click Explore Season.")
 
+    # Display only the supplied descriptions; these do not classify weather data.
+    season_descriptions = {
+        "Birak": "December–January. Warming weather and easing rain. Morning easterlies can give way to afternoon south-westerlies.",
+        "Bunuru": "February–March. Intense heat, little rain, and coastal afternoon breezes.",
+        "Djeran": "April–May. Relief from heat, cooler damp mornings, and gentler winds.",
+        "Makuru": "June–July. Cold, wet conditions, with winds from the west/south.",
+        "Djilba": "August–September. A transition period with a mixture of cold, clear, wet, windy and warmer days.",
+        "Kambarang": "October–November. Warming weather and longer dry intervals.",
+    }
+    description_text = tk.StringVar(value="Select a season and click Explore Season.")
+
     def format_measurement(value, unit):
         """Show two decimal places, or explain that a measurement is missing."""
         if pd.isna(value):
@@ -98,6 +109,8 @@ def main():
 
     # These callbacks run when the corresponding buttons are clicked.
     def explore_season():
+        # Update the description on every click, even if weather data is unavailable.
+        description_text.set(season_descriptions[selected_season.get()])
         # Clear old results so they cannot be mistaken for a failed selection.
         results_text.set("No weather summary loaded.")
         clear_graph("No weather graph loaded.")
@@ -294,6 +307,16 @@ def main():
     # The summary and graph share only the space remaining below the controls.
     results_area = ttk.Frame(content)
     results_area.pack(fill="both", expand=True)
+
+    # Keep season information inside the results area, below the main controls.
+    about_frame = ttk.LabelFrame(results_area, text="About this season", padding=12)
+    about_frame.pack(fill="x", pady=(12, 0))
+    ttk.Label(
+        about_frame,
+        textvariable=description_text,
+        justify="left",
+        wraplength=420,
+    ).pack(anchor="w")
 
     # Display the selected season's summary inside the main window.
     results_frame = ttk.LabelFrame(results_area, text="Weather summary", padding=12)

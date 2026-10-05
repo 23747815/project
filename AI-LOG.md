@@ -95,3 +95,12 @@ Record summaries of subsequent AI-assisted project changes in this file, as requ
 - **Code explanation:** Explained the design before editing and added beginner-friendly comments covering the main function, StringVar selection, button callbacks and tkinter event loop. Provided the VS Code terminal command `python app.py`.
 - **Scope:** No Streamlit or additional libraries were added. Weather analysis, quiz questions and cultural information were not implemented in the GUI.
 - **Verification/actions:** Reviewed the code and callbacks. Runtime verification was unavailable because this environment could not execute the installed python or py command aliases. Existing CSV files, analysis code and HTML report were not changed.
+
+### Inspection of existing season-labelled weather data
+- **AI tool:** Codex
+- **Purpose:** Locate the existing daily weather export and season-assignment logic before connecting weather data to the GUI, avoiding a second classification system.
+- **Findings:** run_analysis() in src/seasons_analysis.py calls add_seasons_column() and writes daily_weather_with_seasons.csv using df.to_csv(..., index=False). The default export location is outputs/seasons/daily_weather_with_seasons.csv, and the existing HTML report links to it.
+- **Existing logic:** src/seasons.py defines get_noongar_season(date), which maps December-January to Birak, February-March to Bunuru, April-May to Djeran, June-July to Makuru, August-September to Djilba and October-November to Kambarang. add_seasons_column(df) applies this function to Date and stores the result in Season. The code documents these month groups as approximations.
+- **Export columns:** Date, MinTemp, MaxTemp, Rainfall, Sunshine, SourceFile, Evaporation, MaxGustSpeed, MaxGustDirection, Temp9am, Humidity9am, Cloud9am, WindDirection9am, WindSpeed9am, Pressure9am, Temp3pm, Humidity3pm, Cloud3pm, WindDirection3pm, WindSpeed3pm, Pressure3pm, Season.
+- **Verification/actions:** Inspected source code, the HTML download link and the saved CSV. Confirmed 22 columns and 365 daily records, with all six season labels present. Did not rerun analysis or modify application code, data or report files; only this log was updated.
+- **Proposed reuse:** The GUI can read the existing export's Season column. If new dates require classification, import the existing functions from src.seasons rather than duplicate the month mapping. GUI integration has not been implemented.

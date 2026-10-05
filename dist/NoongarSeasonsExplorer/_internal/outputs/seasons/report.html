@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Six seasons · Perth weather</title>
+<style>
+:root { color-scheme: light; } * { box-sizing: border-box; }
+body { margin:0; font:16px/1.65 system-ui,sans-serif; color:#203139; background:#efefe7; }
+main { max-width:1280px; margin:auto; padding:32px; }
+header { padding:42px; background:#163c3c; color:#fafaf6; border-radius:16px; }
+h1 { font-size:clamp(32px,5vw,60px); line-height:1.1; margin:10px 0 24px; }
+h2 { font-size:25px; line-height:1.3; } .eyebrow { letter-spacing:0.16em; text-transform:uppercase; font-size:12px; }
+section { background:#fafaf6; padding:28px; border-radius:12px; margin:22px 0; }
+section img { display:block; width:100%; height:auto; } a { color:#246569; } header a { color:#b4dfd5; }
+nav { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:8px; margin:22px 0; }
+nav a { background:#fafaf6; border-radius:6px; padding:10px 14px; text-decoration:none; font-size:14px; }
+table { border-collapse:collapse; width:100%; font-size:14px; } th,td { padding:10px; text-align:left; border-bottom:1px solid #dce0d6; }
+th small { display:block; font-weight:normal; color:#65756d; } .table-wrap { overflow-x:auto; }
+.downloads { font-size:13px; } li { margin-bottom:10px; } .callout { border-left:4px solid #cc8b15; padding-left:18px; }
+summary { cursor:pointer; font-weight:bold; } @media(max-width:600px) { main { padding:12px; } header,section { padding:18px; } }
+@media print { body { background:white; } nav,.downloads { display:none; } section { break-inside:avoid; } }
+</style></head><body><main>
+<header><div class="eyebrow">Weather observations · Learning with data</div><h1>One year.<br>Six seasonal perspectives.</h1>
+<p>Perth · 01 Aug 2025 – 31 Jul 2026 · 365 daily records</p>
+<p>Explore temperature, rain, sunshine and winds alongside the <a href="https://www.bom.gov.au/resources/indigenous-weather-knowledge/indigenous-seasonal-calendars/nyoongar-calendar">Bureau's Nyoongar seasonal calendar</a>.</p></header>
+<section><h2>How to read this demonstration</h2>
+<p>The Noongar calendar belongs to the peoples of south-west Australia. Its seasons respond to local environmental signs and can vary in length;
+the two-month bins here are an approximate teaching guide. Weather data cannot represent the full ecological and cultural knowledge in the calendar.</p>
+<p class="callout">This is a descriptive comparison of the supplied Perth data, not a long-term climatology, a test of traditional knowledge,
+or a rule for detecting the start of a season. Results that differ from the broad descriptions remain visible.</p>
+<table><tr><th style="border-left:5px solid #B74729">Birak<small>Dec–Jan</small></th><td>Warming and easing rain; morning easterlies can give way to afternoon south-westerlies.</td></tr><tr><th style="border-left:5px solid #CC8B15">Bunuru<small>Feb–Mar</small></th><td>Intense heat, little rain, and coastal afternoon breezes.</td></tr><tr><th style="border-left:5px solid #41754C">Djeran<small>Apr–May</small></th><td>Relief from heat, cooler damp mornings, and gentler winds.</td></tr><tr><th style="border-left:5px solid #366B91">Makuru<small>Jun–Jul</small></th><td>Cold, wet conditions, with winds from the west and south.</td></tr><tr><th style="border-left:5px solid #80609A">Djilba<small>Aug–Sep</small></th><td>A transition with a mixture of cold, clear, wet, windy and warmer days.</td></tr><tr><th style="border-left:5px solid #328C87">Kambarang<small>Oct–Nov</small></th><td>Warming weather and longer dry intervals.</td></tr></table><p>Weather descriptions paraphrased from the linked Bureau calendar. Chart colours are presentation choices.</p></section>
+<section><h2>What this sample shows</h2><ul><li>The highest seasonal mean maximum was 31.2°C in Birak. Bunuru averaged 31.0°C. Mean minimums were 17.8°C in Birak and 18.1°C in Bunuru; which season is hottest can depend on the measure. This sample need not exactly match the broad description.</li><li>Makuru had the lowest mean maximum (19.4°C). Djilba had the largest observed rainfall total (302.4 mm). Makuru recorded 178.4 mm and 37.7% wet days.</li><li>From Bunuru to Djeran, the mean minimum changed from 18.1°C to 11.0°C, while 9 am relative humidity changed from 54.7% to 69.1%. These are not direct dew measurements.</li><li>From Djilba to Kambarang, the mean maximum changed from 20.3°C to 24.8°C. The longest within-season run below 1 mm/day changed from 9 to 18 days.</li><li>The narrowly defined morning-east to afternoon-south-west pattern occurred on 19.4% of paired observations in Birak and 15.3% in Bunuru. See the full direction distributions before drawing conclusions.</li></ul></section>
+<nav aria-label="Charts"><a href="#01_weather_through_the_year">01 A year of weather, seen through six seasons</a><a href="#02_temperature_distributions">02 Heat and cool nights: more than an average</a><a href="#03_rain_and_dry_spells">03 Wet seasons and dry intervals</a><a href="#04_sun_cloud_and_evaporation">04 Clearer skies and drying conditions</a><a href="#05_cool_mornings_and_breezes">05 Exploring Djeran&#x27;s cooler, damper mornings</a><a href="#06_morning_and_afternoon_winds">06 Do morning and afternoon winds differ?</a><a href="#07_mix_of_daily_weather">07 Djilba and the mix of daily weather</a><a href="#08_monthly_transitions">08 Seasons change gradually: compare neighbouring months</a></nav><section id="01_weather_through_the_year"><h2>A year of weather, seen through six seasons</h2><a href="01_weather_through_the_year.png"><img loading="lazy" src="01_weather_through_the_year.png" alt="A year of weather, seen through six seasons"></a><p>Bands use approximate calendar seasons. Thin lines show daily observations; smooth lines need ≥4 observed days in 7.<br>Rainfall is recorded to 9 am; sunshine covers a different observation window. The source dates are retained.</p><p class="downloads"><a href="01_weather_through_the_year.png">PNG</a> · <a href="01_weather_through_the_year.svg">Scalable SVG</a></p></section><section id="02_temperature_distributions"><h2>Heat and cool nights: more than an average</h2><a href="02_temperature_distributions.png"><img loading="lazy" src="02_temperature_distributions.png" alt="Heat and cool nights: more than an average"></a><p>Boxes: middle 50%; line: median; whiskers: up to 1.5×IQR; dots: more extreme days.<br>35°C and 10°C are teaching thresholds, not definitions of Noongar seasons. Missing temperatures are excluded per measure.</p><p class="downloads"><a href="02_temperature_distributions.png">PNG</a> · <a href="02_temperature_distributions.svg">Scalable SVG</a></p></section><section id="03_rain_and_dry_spells"><h2>Wet seasons and dry intervals</h2><a href="03_rain_and_dry_spells.png"><img loading="lazy" src="03_rain_and_dry_spells.png" alt="Wet seasons and dry intervals"></a><p>Rainfall observations — Birak: 62, Bunuru: 59, Djeran: 61, Makuru: 61, Djilba: 61, Kambarang: 61. Totals depend on coverage; means and percentages use observed days.<br>Dry spells stop at missing rain, gaps or a season boundary; December–January remains one Birak. &lt;1 mm may include light rain.</p><p class="downloads"><a href="03_rain_and_dry_spells.png">PNG</a> · <a href="03_rain_and_dry_spells.svg">Scalable SVG</a></p></section><section id="04_sun_cloud_and_evaporation"><h2>Clearer skies and drying conditions</h2><a href="04_sun_cloud_and_evaporation.png"><img loading="lazy" src="04_sun_cloud_and_evaporation.png" alt="Clearer skies and drying conditions"></a><p>Sunshine hours depend on daylight length as well as cloud (0 oktas = clear, 8 = overcast). Rain: Perth Metro; other panels: Perth Airport.<br>Pan evaporation indicates atmospheric drying conditions; this cross-station comparison is not a soil-water balance.</p><p class="downloads"><a href="04_sun_cloud_and_evaporation.png">PNG</a> · <a href="04_sun_cloud_and_evaporation.svg">Scalable SVG</a></p></section><section id="05_cool_mornings_and_breezes"><h2>Exploring Djeran&#x27;s cooler, damper mornings</h2><a href="05_cool_mornings_and_breezes.png"><img loading="lazy" src="05_cool_mornings_and_breezes.png" alt="Exploring Djeran&#x27;s cooler, damper mornings"></a><p>These measurements explore the seasonal cooling and humidity pattern; they do not directly measure dew.<br>A gust is a brief peak, not a sustained daily wind speed. A recorded calm is included as 0 km/h; unknown winds remain missing.</p><p class="downloads"><a href="05_cool_mornings_and_breezes.png">PNG</a> · <a href="05_cool_mornings_and_breezes.svg">Scalable SVG</a></p></section><section id="06_morning_and_afternoon_winds"><h2>Do morning and afternoon winds differ?</h2><a href="06_morning_and_afternoon_winds.png"><img loading="lazy" src="06_morning_and_afternoon_winds.png" alt="Do morning and afternoon winds differ?"></a><p>Each row sums to 100% over valid compass directions plus Calm; n is the number of classified observations.<br>Two snapshots at Perth Metro can illustrate a wind shift, but cannot confirm sea-breeze timing, cause or coastal cooling.</p><p class="downloads"><a href="06_morning_and_afternoon_winds.png">PNG</a> · <a href="06_morning_and_afternoon_winds.svg">Scalable SVG</a></p></section><section id="07_mix_of_daily_weather"><h2>Djilba and the mix of daily weather</h2><a href="07_mix_of_daily_weather.png"><img loading="lazy" src="07_mix_of_daily_weather.png" alt="Djilba and the mix of daily weather"></a><p>Each point is one source-date record with all three measurements. SD uses all observed daily maximums in the season.<br>Sunshine and rainfall have different recording windows and stations: these are broad patterns, not same-hour relationships.</p><p class="downloads"><a href="07_mix_of_daily_weather.png">PNG</a> · <a href="07_mix_of_daily_weather.svg">Scalable SVG</a></p></section><section id="08_monthly_transitions"><h2>Seasons change gradually: compare neighbouring months</h2><a href="08_monthly_transitions.png"><img loading="lazy" src="08_monthly_transitions.png" alt="Seasons change gradually: compare neighbouring months"></a><p>Monthly averages show changes hidden by a two-month seasonal mean. Rainfall bars are observed totals, not estimates for missing days.<br>Look for cooling through Djeran and warming through Kambarang; allow this individual year to differ from a typical pattern.</p><p class="downloads"><a href="08_monthly_transitions.png">PNG</a> · <a href="08_monthly_transitions.svg">Scalable SVG</a></p></section>
+<section><h2>Compare the six seasons</h2><div class="table-wrap"><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Records</th>
+      <th>Max temp n</th>
+      <th>Rain n</th>
+      <th>Min °C</th>
+      <th>Max °C</th>
+      <th>Rain mm</th>
+      <th>Wet days %</th>
+      <th>Sun h/day</th>
+      <th>Dry run days</th>
+    </tr>
+    <tr>
+      <th>Season</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Birak</th>
+      <td>62</td>
+      <td>61</td>
+      <td>62</td>
+      <td>17.8</td>
+      <td>31.2</td>
+      <td>17.6</td>
+      <td>3.2</td>
+      <td>12.1</td>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>Bunuru</th>
+      <td>59</td>
+      <td>59</td>
+      <td>59</td>
+      <td>18.1</td>
+      <td>31.0</td>
+      <td>78.4</td>
+      <td>10.2</td>
+      <td>10.1</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>Djeran</th>
+      <td>61</td>
+      <td>61</td>
+      <td>61</td>
+      <td>11.0</td>
+      <td>23.2</td>
+      <td>91.0</td>
+      <td>21.3</td>
+      <td>7.3</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>Makuru</th>
+      <td>61</td>
+      <td>61</td>
+      <td>61</td>
+      <td>8.4</td>
+      <td>19.4</td>
+      <td>178.4</td>
+      <td>37.7</td>
+      <td>6.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>Djilba</th>
+      <td>61</td>
+      <td>61</td>
+      <td>61</td>
+      <td>9.0</td>
+      <td>20.3</td>
+      <td>302.4</td>
+      <td>42.6</td>
+      <td>7.7</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>Kambarang</th>
+      <td>61</td>
+      <td>61</td>
+      <td>61</td>
+      <td>13.1</td>
+      <td>24.8</td>
+      <td>71.4</td>
+      <td>19.7</td>
+      <td>10.1</td>
+      <td>18</td>
+    </tr>
+  </tbody>
+</table></div>
+<p>Temperatures and sunshine are means; rain is a total. Wet = ≥1 mm; dry run = consecutive recorded days below 1 mm within a season.</p>
+<p><a href="seasonal_statistics.csv">Full seasonal statistics</a> · <a href="monthly_statistics.csv">Monthly statistics</a> ·
+<a href="wind_shift_summary.csv">Paired wind-shift counts</a> · <a href="daily_weather_with_seasons.csv">Daily data with seasons</a></p></section>
+<section><h2>Coverage, methods and limitations</h2>
+<ul><li>365 unique source dates across 365 calendar days; 0 absent dates. No weather values were filled or interpolated.</li>
+<li>Each mean and percentage uses observations available for that measurement. Counts are in the exported tables. Zero rainfall is an observation; missing rainfall is unknown.</li>
+<li>Totals are observed totals and are affected by season length and missing records. For this sample, compare daily means and wet-day percentages too.</li>
+<li>Raw-file metadata assigns temperature, humidity, wind, pressure and rain to Perth Metro (009225), and sunshine, cloud and evaporation to Perth Airport (009021).</li>
+<li>Recorded dates are retained. Rainfall and pan evaporation cover the 24 hours to 9 am; sunshine covers the 24 hours to midnight.
+See the <a href="https://www.bom.gov.au/climate/dwo/IDCJDW0000.pdf">Bureau's observation notes</a>. Same-row measurements need not describe precisely the same hours.</li>
+<li>Daily minimums cover the period ending at 9 am, while maximums cover the period starting at 9 am. The exported MeanDailyRange is a same-source-date difference, not a strictly coincident diurnal range.</li>
+<li>Sunshine hours also change with available daylight. Cloud observations offer a separate view of sky conditions.</li>
+<li>Illustrative thresholds: wet day ≥1 mm, hot day maximum ≥35°C, cool night minimum &lt;10°C. These are not cultural season definitions.</li>
+<li>Wind directions describe where wind comes from. The paired proxy requires 9 am ENE/E/ESE and 3 pm SSW/SW/WSW on a date with both directions known (including calm as a valid observation).</li>
+<li>Dry runs end at a wet day, missing rain, a gap in dates, or the end of a season occurrence. December and January form one Birak. Runs may be truncated at the dataset edges.</li>
+<li>Seasonal summaries pool available occurrences if additional years are later supplied; totals would then need year-by-year comparisons. This report currently describes the local sample only.</li></ul>
+<details><summary>Measurement coverage</summary><div class="table-wrap"><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ObservedDays</th>
+      <th>MissingDays</th>
+      <th>CoveragePercent</th>
+    </tr>
+    <tr>
+      <th>Measurement</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>MinTemp</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>MaxTemp</th>
+      <td>364</td>
+      <td>1</td>
+      <td>99.7</td>
+    </tr>
+    <tr>
+      <th>Rainfall</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>Sunshine</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>Evaporation</th>
+      <td>362</td>
+      <td>3</td>
+      <td>99.2</td>
+    </tr>
+    <tr>
+      <th>MaxGustSpeed</th>
+      <td>363</td>
+      <td>2</td>
+      <td>99.5</td>
+    </tr>
+    <tr>
+      <th>MaxGustDirection</th>
+      <td>363</td>
+      <td>2</td>
+      <td>99.5</td>
+    </tr>
+    <tr>
+      <th>Temp9am</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>Humidity9am</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>Cloud9am</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>WindDirection9am</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>WindSpeed9am</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>Pressure9am</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>Temp3pm</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>Humidity3pm</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>Cloud3pm</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>WindDirection3pm</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>WindSpeed3pm</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>Pressure3pm</th>
+      <td>365</td>
+      <td>0</td>
+      <td>100.0</td>
+    </tr>
+  </tbody>
+</table></div></details>
+<p><a href="data_quality.csv">Download coverage</a> · <a href="findings.md">Read the findings as text</a></p></section>
+<footer>Source: local BOM monthly CSV files, retained under data/raw_data. Generated by src/seasons_analysis.py. No external scripts or fonts are required.</footer>
+</main></body></html>

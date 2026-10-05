@@ -1,0 +1,56 @@
+{
+  "frozen": true,
+  "executable": "C:\\Users\\peppe\\Documents\\cits1501\\project\\build\\acceptance-7fc406a552ca495e9ec2fb1a5d638271\\NoongarSeasonsExplorer\\NoongarSeasonsExplorer.exe",
+  "csv_records": 365,
+  "seasons": [
+    {
+      "season": "Birak",
+      "days": 62,
+      "summary": "passed",
+      "graph": "passed",
+      "controls": "visible"
+    },
+    {
+      "season": "Bunuru",
+      "days": 59,
+      "summary": "passed",
+      "graph": "passed",
+      "controls": "visible"
+    },
+    {
+      "season": "Djeran",
+      "days": 61,
+      "summary": "passed",
+      "graph": "passed",
+      "controls": "visible"
+    },
+    {
+      "season": "Makuru",
+      "days": 61,
+      "summary": "passed",
+      "graph": "passed",
+      "controls": "visible"
+    },
+    {
+      "season": "Djilba",
+      "days": 61,
+      "summary": "passed",
+      "graph": "passed",
+      "controls": "visible"
+    },
+    {
+      "season": "Kambarang",
+      "days": 61,
+      "summary": "passed",
+      "graph": "passed",
+      "controls": "visible"
+    }
+  ],
+  "quiz": "passed: required selection, feedback, locked answers, 4/5 final score, close",
+  "report": {
+    "url": "file:///C:/Users/peppe/Documents/cits1501/project/build/acceptance-7fc406a552ca495e9ec2fb1a5d638271/NoongarSeasonsExplorer/_internal/outputs/seasons/report.html",
+    "browser_dispatch_accepted": true
+  },
+  "status": "passed",
+  "exit": "main window destroyed by Exit button"
+}

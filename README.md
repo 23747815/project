@@ -255,6 +255,6 @@ AI assistance was used for planning, debugging, code suggestions, testing suppor
 
 ## 17. Author
 
-Author: [Student Name]
+Author: [Isabelle Pepper, 23747815]
 
 Unit: CITS1501

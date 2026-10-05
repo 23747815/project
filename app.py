@@ -5,6 +5,9 @@ from tkinter import messagebox, ttk
 from pathlib import Path
 
 import pandas as pd
+import matplotlib.dates as mdates
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 
 
 def main():
@@ -57,10 +60,47 @@ def main():
             return "Not available"
         return f"{value:.2f} {unit}"
 
+    def clear_graph(message):
+        """Remove the previous season's lines and show a helpful title."""
+        temperature_axes.clear()
+        temperature_axes.set_title(message)
+        temperature_axes.set_xlabel("Date")
+        temperature_axes.set_ylabel("Temperature (°C)")
+        graph_canvas.draw_idle()
+
+    def update_graph(season_data, season):
+        """Plot the same saved-season records used by the weather summary."""
+        clear_graph(f"{season}: daily temperatures")
+        # Parse and sort dates in a copy; the saved CSV stays unchanged.
+        graph_data = season_data.copy()
+        graph_data["Date"] = pd.to_datetime(graph_data["Date"], errors="coerce")
+        graph_data = graph_data.dropna(subset=["Date"]).sort_values("Date")
+        if graph_data.empty or not graph_data[["MinTemp", "MaxTemp"]].notna().any().any():
+            clear_graph(f"No temperature data to plot for {season}.")
+            return
+
+        # Missing temperatures remain gaps rather than being filled with zero.
+        temperature_axes.plot(
+            graph_data["Date"], graph_data["MinTemp"],
+            label="Minimum temperature", color="tab:blue", marker=".",
+        )
+        temperature_axes.plot(
+            graph_data["Date"], graph_data["MaxTemp"],
+            label="Maximum temperature", color="tab:red", marker=".",
+        )
+        date_ticks = mdates.AutoDateLocator(minticks=3, maxticks=6)
+        temperature_axes.xaxis.set_major_locator(date_ticks)
+        temperature_axes.xaxis.set_major_formatter(mdates.ConciseDateFormatter(date_ticks))
+        temperature_axes.legend(fontsize="small")
+        temperature_axes.grid(True, alpha=0.3)
+        # Redraw the existing embedded canvas instead of opening a window.
+        graph_canvas.draw_idle()
+
     # These callbacks run when the corresponding buttons are clicked.
     def explore_season():
         # Clear old results so they cannot be mistaken for a failed selection.
         results_text.set("No weather summary loaded.")
+        clear_graph("No weather graph loaded.")
         try:
             weather = pd.read_csv(csv_path)
         except FileNotFoundError:
@@ -79,7 +119,7 @@ def main():
             return
 
         measurements = ["MinTemp", "MaxTemp", "Rainfall", "Sunshine"]
-        required_columns = ["Season"] + measurements
+        required_columns = ["Date", "Season"] + measurements
         missing_columns = [name for name in required_columns if name not in weather.columns]
         if missing_columns:
             messagebox.showerror(
@@ -94,6 +134,7 @@ def main():
         season_data = weather.loc[weather["Season"] == season].copy()
         if season_data.empty:
             results_text.set(f"No recorded days were found for {season}.")
+            clear_graph(f"No recorded days for {season}.")
             return
 
         # Conversion affects only this in-memory copy, never the CSV file.
@@ -116,6 +157,7 @@ def main():
             f"Average sunshine: {format_measurement(average_sunshine, 'hours/day')}\n\n"
             "Measurements use available values; missing values are excluded."
         )
+        update_graph(season_data, season)
 
     def show_quiz():
         messagebox.showinfo("Quiz", "Quiz coming soon!", parent=window)
@@ -133,6 +175,16 @@ def main():
         justify="left",
         wraplength=420,
     ).pack(anchor="w")
+
+    # Create one figure and embed its canvas as a normal Tkinter widget.
+    # Each Explore click reuses this figure, so graphs do not accumulate.
+    graph_frame = ttk.Frame(content)
+    graph_frame.pack(fill="both", expand=True, pady=(0, 8))
+    temperature_figure = Figure(figsize=(5, 2.5), dpi=100, layout="constrained")
+    temperature_axes = temperature_figure.add_subplot(111)
+    graph_canvas = FigureCanvasTkAgg(temperature_figure, master=graph_frame)
+    graph_canvas.get_tk_widget().pack(fill="both", expand=True)
+    clear_graph("Select a season to view daily temperatures.")
 
     ttk.Button(content, text="Quiz", command=show_quiz).pack(fill="x", pady=4)
     ttk.Button(content, text="Exit", command=window.destroy).pack(fill="x", pady=4)

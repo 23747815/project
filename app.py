@@ -160,7 +160,127 @@ def main():
         update_graph(season_data, season)
 
     def show_quiz():
-        messagebox.showinfo("Quiz", "Quiz coming soon!", parent=window)
+        """Open an independent quiz without changing the main window."""
+        # Each question stores its text, four choices and the correct choice.
+        questions = [
+            (
+                "Which season is associated with December-January?",
+                ("Bunuru", "Birak", "Makuru", "Kambarang"),
+                "Birak",
+            ),
+            (
+                "Which season has intense heat, little rain and coastal afternoon breezes?",
+                ("Djeran", "Djilba", "Bunuru", "Makuru"),
+                "Bunuru",
+            ),
+            (
+                "Which season brings relief from heat, cooler damp mornings and gentler winds?",
+                ("Djeran", "Birak", "Kambarang", "Djilba"),
+                "Djeran",
+            ),
+            (
+                "Which season is cold and wet, with winds from the west or south?",
+                ("Kambarang", "Bunuru", "Birak", "Makuru"),
+                "Makuru",
+            ),
+            (
+                "Which season is a transition with a mixture of cold, clear, wet, windy and warmer days?",
+                ("Makuru", "Kambarang", "Djilba", "Djeran"),
+                "Djilba",
+            ),
+        ]
+
+        # Toplevel shares the existing event loop; the main app stays usable.
+        quiz_window = tk.Toplevel(window)
+        quiz_window.title("Noongar Seasons Quiz")
+        quiz_content = ttk.Frame(quiz_window, padding=24)
+        quiz_content.pack(fill="both", expand=True)
+
+        question_index = 0
+        score = 0
+        answered = False
+        selected_answer = tk.StringVar(master=quiz_window, value="")
+
+        progress_label = ttk.Label(quiz_content)
+        progress_label.pack(anchor="w", pady=(0, 8))
+        question_label = ttk.Label(quiz_content, wraplength=420, justify="left")
+        question_label.pack(anchor="w", pady=(0, 12))
+
+        answer_buttons = []
+        for _ in range(4):
+            answer_button = ttk.Radiobutton(
+                quiz_content, variable=selected_answer,
+            )
+            answer_button.pack(anchor="w", pady=4)
+            answer_buttons.append(answer_button)
+
+        feedback_label = ttk.Label(quiz_content, wraplength=420, justify="left")
+        feedback_label.pack(anchor="w", pady=12)
+
+        def display_question():
+            """Reset the choices and feedback for the current question."""
+            nonlocal answered
+            answered = False
+            selected_answer.set("")
+            question, choices, correct_answer = questions[question_index]
+            progress_label.config(text=f"Question {question_index + 1} of {len(questions)}")
+            question_label.config(text=question)
+            for button, choice in zip(answer_buttons, choices):
+                button.config(text=choice, value=choice, state="normal")
+            feedback_label.config(text="")
+            submit_button.config(state="normal")
+            next_button.config(
+                state="disabled",
+                text="Show Results" if question_index == len(questions) - 1 else "Next Question",
+            )
+
+        def submit_answer():
+            """Score each question once and let the user read the feedback."""
+            nonlocal score, answered
+            if answered:
+                return
+            if not selected_answer.get():
+                feedback_label.config(text="Please select an answer first.")
+                return
+
+            correct_answer = questions[question_index][2]
+            if selected_answer.get() == correct_answer:
+                score += 1
+                feedback_label.config(text="Correct!")
+            else:
+                feedback_label.config(text=f"Incorrect. The correct answer is {correct_answer}.")
+            answered = True
+            # Lock the answer so repeated clicks cannot increase the score.
+            for button in answer_buttons:
+                button.config(state="disabled")
+            submit_button.config(state="disabled")
+            next_button.config(state="normal")
+
+        def next_question():
+            """Advance after submission, or replace the quiz with the score."""
+            nonlocal question_index
+            if not answered:
+                return
+            question_index += 1
+            if question_index < len(questions):
+                display_question()
+            else:
+                # Only quiz widgets are removed; the main window is untouched.
+                for widget in quiz_content.winfo_children():
+                    widget.destroy()
+                ttk.Label(
+                    quiz_content,
+                    text=f"Quiz complete! You scored {score}/{len(questions)}.",
+                ).pack(pady=(0, 12))
+                ttk.Button(
+                    quiz_content, text="Close Quiz", command=quiz_window.destroy,
+                ).pack(fill="x")
+
+        submit_button = ttk.Button(quiz_content, text="Submit Answer", command=submit_answer)
+        submit_button.pack(fill="x", pady=4)
+        next_button = ttk.Button(quiz_content, text="Next Question", command=next_question)
+        next_button.pack(fill="x", pady=4)
+        display_question()
 
     # Pack the controls first so the results cannot take their vertical space.
     controls_frame = ttk.Frame(content)
